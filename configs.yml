@@ -1,0 +1,17 @@
+openai_api_key: your-key-not-here
+model_name: 'gpt-3.5-turbo'
+#model_name: 'gpt-4'
+temperature: 0.0
+n_runs: 10
+n_use_cases: 5
+
+max_enemies_per_encounter: 4
+max_treasures_per_encounter: 1
+max_traps_per_encounter: 1
+
+corridor_min_length: 2
+corridor_length: 4
+corridor_max_length: 5
+
+minimap_corridor_scale: 0.1
+minimap_room_scale: 0.2

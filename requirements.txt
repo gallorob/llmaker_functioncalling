@@ -1,0 +1,8 @@
+openai
+pyyaml
+pillow
+pydantic
+matplotlib
+pyqt6
+pandas
+pyarrow

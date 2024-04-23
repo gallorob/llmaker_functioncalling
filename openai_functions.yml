@@ -1,0 +1,446 @@
+- type: function
+  function:
+    name: create_room
+    description: Create a room in the level. Creating a new with a connecting room will also include the corridor between the two rooms.
+    parameters:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The room name
+        description:
+          type: string
+          description: The room physical characteristics
+        room_from:
+          type: string
+          description: The room it connects from. If unspecified, the current room in the level. If there is no current room, set to ''.
+      required:
+        - name
+        - description
+        - room_from
+
+- type: function
+  function:
+    name: remove_room
+    description: Remove the room from the level
+    parameters:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The room name
+      required:
+        - name
+
+- type: function
+  function:
+    name: update_room
+    description: Update the room
+    parameters:
+      type: object
+      properties:
+        room_reference_name:
+          type: string
+          description: The original room name
+        name:
+          type: string
+          description: The updated room name
+        description:
+          type: string
+          description: The updated room physical characteristics
+      required:
+        - room_reference_name
+        - name
+        - description
+
+- type: function
+  function:
+    name: add_corridor
+    description: Add a corridor
+    parameters:
+      type: object
+      properties:
+        room_from_name:
+          type: string
+          description: The starting room name
+        room_to_name:
+          type: string
+          description: The connecting room name
+        corridor_length:
+          type: integer
+          description: The corridor length (must be between 3 and 5, inclusive)
+      required:
+        - room_from_name
+        - room_to_name
+        - corridor_length
+
+- type: function
+  function:
+    name: remove_corridor
+    description: Remove a corridor
+    parameters:
+      type: object
+      properties:
+        room_from_name:
+          type: string
+          description: The starting room name
+        room_to_name:
+          type: string
+          description: The connecting room name
+      required:
+        - room_from_name
+        - room_to_name
+
+- type: function
+  function:
+    name: update_corridor
+    description: Update the corridor
+    parameters:
+      type: object
+      properties:
+        room_from_name:
+          type: string
+          description: The original room name
+        room_to_name:
+          type: string
+          description: The updated room name
+        corridor_length:
+          type: integer
+          description: The updated room description
+      required:
+        - room_from_name
+        - room_to_name
+        - corridor_length
+
+- type: function
+  function:
+    name: add_enemies
+    description: Add enemies to a room or corridor
+    parameters:
+      type: object
+      properties:
+        room_name:
+          type: string
+          description: The room name
+        other_room_name:
+          type: string
+          description: The other room name; set to None when targeting a room.
+        cell_index:
+          type: integer
+          description: The corridor cell; set to None when targeting a room, otherwise set to a value between 1 and the length of the corridor.
+        names:
+          type: array
+          items:
+            type: string
+          description: The names of the enemies
+        descriptions:
+          type: array
+          items:
+            type: string
+          description: The physical characteristics of the enemies
+        races:
+          type: array
+          items:
+            type: string
+          description: The race of the enemies
+        hps:
+          type: array
+          items:
+            type: number
+            exclusiveMinimum: 0.0
+          description: The health points of the enemies, values must be greater than 0
+        dodges:
+          type: array
+          items:
+            type: number
+            exclusiveMinimum: 0.0
+          description: The dodge points of the enemies, values must be greater than 0
+        prots:
+          type: array
+          items:
+            type: number
+            exclusiveMinimum: 0.0
+          description: The protection points of the enemies, values must be greater than 0
+        spds:
+          type: array
+          items:
+            type: number
+            exclusiveMinimum: 0.0
+          description: The speed points of the enemies, values must be greater than 0
+      required:
+        - room_name
+        - names
+        - descriptions
+        - races
+        - hps
+        - dodges
+        - prots
+        - spds
+
+- type: function
+  function:
+    name: add_treasures
+    description: Add treasures to a room or corridor
+    parameters:
+      type: object
+      properties:
+        room_name:
+          type: string
+          description: The room name
+        other_room_name:
+          type: string
+          description: The other room name; set to None when targeting a room.
+        cell_index:
+          type: integer
+          description: The corridor cell; set to None when targeting a room, otherwise set to a value between 1 and the length of the corridor.
+        names:
+          type: array
+          items:
+            type: string
+          description: The names of the treasures
+        descriptions:
+          type: array
+          items:
+            type: string
+          description: The physical characteristics of the treasures
+        loots:
+          type: array
+          items:
+            type: string
+          description: The loot descriptions of the treasures
+      required:
+        - level
+        - room_name
+        - names
+        - descriptions
+        - loots
+
+- type: function
+  function:
+    name: add_traps
+    description: Add traps to a single cell in a corridor. Traps cannot be added to rooms.
+    parameters:
+      type: object
+      properties:
+        room_name:
+          type: string
+          description: The room name
+        other_room_name:
+          type: string
+          description: The other room name.
+        cell_index:
+          type: integer
+          description: The corridor cell. Set to a value between 1 and the length of the corridor.
+        names:
+          type: array
+          items:
+            type: string
+          description: The names of the traps
+        descriptions:
+          type: array
+          items:
+            type: string
+          description: The physical characteristics of the traps
+        effects:
+          type: array
+          items:
+            type: string
+          description: The effects of the traps
+      required:
+        - room_name
+        - other_room_name
+        - cell_index
+        - names
+        - descriptions
+        - effects
+
+- type: function
+  function:
+    name: remove_entities
+    description: Remove entities from a room or corridor
+    parameters:
+      type: object
+      properties:
+        room_name:
+          type: string
+          description: The room name
+        other_room_name:
+          type: string
+          description: The other room name. Set to None when targeting a room.
+        cell_index:
+          type: integer
+          description: The corridor cell. Set to None when targeting a room, otherwise set to a value between 1 and the length of the corridor.
+        entities_name:
+          type: array
+          items:
+            type: string
+          description: The names of the entities
+        entities_type:
+          type: array
+          items:
+            type: string
+            enum: [enemy, trap, treasure]
+          description: The type of the entities
+      required:
+        - room_name
+        - entities_name
+        - entities_type
+
+- type: function
+  function:
+    name: update_enemies_properties
+    description: Update properties of enemies in a room or corridor. Pass the current properties if they're not being updated.
+    parameters:
+      type: object
+      properties:
+        room_name:
+          type: string
+          description: The room name
+        reference_names:
+          type: array
+          items:
+            type: string
+          description: The reference names of the enemies to update
+        names:
+          type: array
+          items:
+            type: string
+          description: The updated names of the enemies
+        descriptions:
+          type: array
+          items:
+            type: string
+          description: The updated physical details  descriptions of the enemies
+        races:
+          type: array
+          items:
+            type: string
+          description: The updated races of the enemies
+        hps:
+          type: array
+          items:
+            type: number
+            exclusiveMinimum: 0.0
+          description: The updated health points of the enemies
+        dodges:
+          type: array
+          items:
+            type: number
+            exclusiveMinimum: 0.0
+          description: The updated dodge points of the enemies
+        prots:
+          type: array
+          items:
+            type: number
+            exclusiveMinimum: 0.0
+          description: The updated protection points of the enemies
+        spds:
+          type: array
+          items:
+            type: number
+            exclusiveMinimum: 0.0
+          description: The updated speed points of the enemies
+        other_room_name:
+          type: string
+          description: The other room name. Set to None when targeting a room.
+        cell_index:
+          type: integer
+          description: The corridor cell. Set to None when targeting a room, otherwise set to a value between 1 and the length of the corridor.
+      required:
+        - room_name
+        - reference_names
+        - names
+        - descriptions
+        - races
+        - hps
+        - dodges
+        - prots
+        - spds
+
+- type: function
+  function:
+    name: update_treasures_properties
+    description: Update properties of treasures in a room or corridor. Pass the current properties if they're not being updated.
+    parameters:
+      type: object
+      properties:
+        room_name:
+          type: string
+          description: The room name
+        reference_names:
+          type: array
+          items:
+            type: string
+          description: The reference names of the treasures to update
+        names:
+          type: array
+          items:
+            type: string
+          description: The updated names of the treasures
+        descriptions:
+          type: array
+          items:
+            type: string
+          description: The updated physical characteristics of the treasures
+        loots:
+          type: array
+          items:
+            type: string
+          description: The updated loot descriptions of the treasures
+        other_room_name:
+          type: string
+          description: The other room name. Set to None when targeting a room.
+        cell_index:
+          type: integer
+          description: The corridor cell. Set to None when targeting a room, otherwise set to a value between 1 and the length of the corridor.
+      required:
+        - room_name
+        - reference_names
+        - names
+        - descriptions
+        - loots
+
+- type: function
+  function:
+    name: update_traps_properties
+    description: Update properties of traps in a corridor. Pass the current properties if they're not being updated.
+    parameters:
+      type: object
+      properties:
+        room_name:
+          type: string
+          description: The room name
+        reference_names:
+          type: array
+          items:
+            type: string
+          description: The reference names of the traps to update
+        names:
+          type: array
+          items:
+            type: string
+          description: The updated names of the traps
+        descriptions:
+          type: array
+          items:
+            type: string
+          description: The updated physical characteristics of the traps
+        effects:
+          type: array
+          items:
+            type: string
+          description: The updated effects of the traps
+        other_room_name:
+          type: string
+          description: The other room name
+        cell_index:
+          type: integer
+          description: The corridor cell
+      required:
+        - room_name
+        - other_room_name
+        - cell_index
+        - reference_names
+        - names
+        - descriptions
+        - effects
