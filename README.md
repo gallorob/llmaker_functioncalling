@@ -1,4 +1,4 @@
-# Controlling Large Language Models via Function Calling for Consistent Game Content Creation
+# Consistent Game Content Creation via Function Calling for Large Language Models
 
 Codebase for "Consistent Game Content Creation via Function Calling for Large Language Models", accepted as an auxiliary paper for the IEEE Conference on Games (CoG) 2024.
 
